@@ -28,4 +28,18 @@ export class User {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt!: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  viva_goku?: Date;
+
+    @UpdateDateColumn({ type: 'timestamp' })
+    hola_mundp?: Date;
+
+     @Column({ type: 'varchar', length: 150, unique: true })
+  prueba1?: string;
+
+  @Column({ type: 'varchar', length: 150, unique: true })
+  prueba2?: string;
+
+
 }
