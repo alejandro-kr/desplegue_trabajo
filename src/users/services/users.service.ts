@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
+import {  UpdateUserDto } from '../dtos/update-user.dtio';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -33,6 +34,24 @@ export class UsersService {
     const result = await this.userRepository.delete(id);
     if (result.affected === 0) throw new NotFoundException(`Usuario con id ${id} no encontrado`);
   }
+
+    // Sirve para actualizar parcialmente un usuario por ID
+  async update(id: string, changes: UpdateUserDto): Promise<User> {
+    // 1. Buscamos si el usuario existe (reutiliza tu método findOne)
+    const user = await this.findOne(id);
+
+    // 2. Si viene un nuevo password en los cambios, lo encriptamos
+    if (changes.password) {
+      changes.password = await bcrypt.hash(changes.password, 10);
+    }
+
+    // 3. Mezclamos los cambios sobre el usuario encontrado
+    const usuarioEditado = this.userRepository.merge(user, changes);
+
+    // 4. Guardamos los cambios en PostgreSQL
+    return await this.userRepository.save(usuarioEditado);
+  }
+
 }
 
 //Petición HTTP (curl / Swagger / Postman)
