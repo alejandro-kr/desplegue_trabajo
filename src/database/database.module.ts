@@ -7,6 +7,8 @@ import config from '../config';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
+   
+      
       inject: [config.KEY],
       useFactory: (configType: ConfigType<typeof config>) => {
         const { url, user, host, name, password, port } = configType.dataBase;
