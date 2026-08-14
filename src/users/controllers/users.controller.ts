@@ -1,5 +1,5 @@
 
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Patch } from '@nestjs/common';
 //De @nestjs/common: los decoradores para definir rutas 
 //(Get, Post, Delete), para tomar datos de la URL (Param) y del cuerpo de la petición (Body)
 
@@ -8,6 +8,7 @@ import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from '../services/users.service';
 //El UsersService (la lógica real) y el CreateUserDto (la forma que debe tener el JSON al crear un usuario)
 import { CreateUserDto } from '../dtos/create-user.dto';
+import {  UpdateUserDto } from '../dtos/update-user.dtio';
 
 @ApiTags('users')
 @Controller('users')
@@ -42,6 +43,18 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
+
+
+    // Recibe la petición PATCH /users/:id con el JSON de los cambios
+  @Patch(':id')
+  @ApiOperation({ summary: 'Actualizar un usuario por id (parcial)' })
+  @ApiParam({ name: 'id', description: 'ID del usuario a editar' })
+  @ApiResponse({ status: 200, description: 'Usuario actualizado con éxito.' })
+  @ApiResponse({ status: 404, description: 'Usuario no encontrado.' })
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
+  }
+
 }
 //primero pasa por user.controller.ts que eschupa la peticion que alla echo el usuario que llegen a /users
 //despues recoje los datos que allan sido mandados por la (URL o del cuerpo del mensaje)
