@@ -36,7 +36,7 @@ export default new DataSource({
   ...dataSourceOptions,
   
   // Seguridad: synchronize siempre en false para usar migraciones profesionales [1-3]
-  synchronize: true, 
+  synchronize: false, 
 
   // Rutas que funcionan tanto en desarrollo (.ts) como en producción (.js) [4, 5]
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
