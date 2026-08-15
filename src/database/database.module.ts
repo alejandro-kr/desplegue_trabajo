@@ -18,7 +18,7 @@ import config from '../config';
           return {
             type: 'postgres',
             url,
-            synchronize: false,
+            synchronize: true,
             autoLoadEntities: true,
             ssl: {
               rejectUnauthorized: false, // Obligatorio para la conexión SSL de Neon
