@@ -35,10 +35,13 @@ export class User {
     @UpdateDateColumn({ type: 'timestamp' })
     hola_mundp?: Date;
 
-     @Column({ type: 'varchar', length: 150, unique: true })
+     @Column({ type: 'varchar', length: 150, nullable:true })
   prueba1?: string;
 
-  @Column({ type: 'varchar', length: 150, unique: true })
+     @Column({ type: 'varchar', length: 150, nullable:true })
+  prueba3?: string;
+
+  @Column({ type: 'varchar', length: 150, nullable: true })
   prueba2?: string;
 
 
